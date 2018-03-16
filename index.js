@@ -102,6 +102,14 @@ client.on('guildMemberRemove', member => {
   channel.send({ embed });
 });
 
+client.on("messageUpdate", async (oM, nM) => {
+	if (oM.content !== nM.content) {
+		const { guild } = nM;
+		if (!guild) return;
+		
+		client.emit('message', nM);
+	}
+});
 client.on("message", async message => {
 //scheldwoorden filter
 	if (message.author.equals(client.user)) return;
